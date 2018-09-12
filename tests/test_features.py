@@ -41,6 +41,16 @@ class TestFactory(TestCase):
         assert not result[0](basically_anything_here='foo')
         assert log.warning.called
 
+    def test_no_parameter(self):
+        strategies = {'Foo': mock.Mock(return_value='R')}
+        feature = {'strategies': [
+            {'name': 'Foo'},
+        ]}
+
+        result = features.feature_gates(strategies, feature)
+        assert len(result) == 1
+        assert result == ['R']
+
 
 class TestFeature(TestCase):
     def test_happy_path(self):
