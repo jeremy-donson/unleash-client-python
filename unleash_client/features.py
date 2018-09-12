@@ -6,7 +6,7 @@ log = logging.getLogger(__name__)
 def feature_gates(strategies, feature):
     tests = []
     for args in feature['strategies']:
-        name, parameters = args['name'], args['parameters']
+        name, parameters = args['name'], args.get('parameters', {})
         strategy = strategies.get(name)
         if strategy:
             test = strategy(**parameters)
