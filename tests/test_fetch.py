@@ -26,7 +26,7 @@ class TestDummyClient(TestCase):
 
 
 class TestUrlFetch(TestCase):
-    url = 'http://example.com/api/features'
+    url = 'http://example.com/api/client/features'
 
     @mock.patch('unleash_client.io.requests')
     def test_url_to_nowhere(self, requests):

@@ -33,7 +33,7 @@ class Client:
         self.instance_id = instance_id or name_instance()
 
         self.strategies = strategies
-        features_url = url + '/api/features'
+        features_url = url + '/api/client/features'
         self.fetch = fetch or UrlFetcher(features_url, refresh_interval)
         self.defs = {}
         self.features = {}
