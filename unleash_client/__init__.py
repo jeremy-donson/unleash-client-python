@@ -8,6 +8,7 @@ log = logging.getLogger(__name__)
 
 def client(
     url='',
+    headers=None,
     refresh_interval=60,
     fetch=None,
     *al,
@@ -27,4 +28,4 @@ def client(
         log.error("Unexpected unleash client url scheme: %r", url)
         raise ValueError(url)
 
-    return Client('', *al, fetch=fetch, **kw)
+    return Client(url, headers, *al, fetch=fetch, **kw)

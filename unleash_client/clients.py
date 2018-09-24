@@ -19,6 +19,7 @@ class Client:
     def __init__(
             self,
             url='http://localhost:4242',
+            headers=None,
             app_name='anon-app',
             instance_id=None,
             refresh_interval=60,
@@ -29,12 +30,13 @@ class Client:
             fetch=None,
     ):
         self.url = url
+        self._headers = headers
         self.app_name = app_name
         self.instance_id = instance_id or name_instance()
 
         self.strategies = strategies
         features_url = url + '/api/client/features'
-        self.fetch = fetch or UrlFetcher(features_url, refresh_interval)
+        self.fetch = fetch or UrlFetcher(features_url, refresh_interval, self._headers)
         self.defs = {}
         self.features = {}
 
@@ -43,6 +45,7 @@ class Client:
                 self,
                 url + '/api/client/metrics',
                 metrics_interval,
+                self._headers,
                 clock=clock,
             )
         else:

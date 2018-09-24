@@ -35,17 +35,20 @@ class PeriodicalOperation:
 
 
 class UrlFetcher(PeriodicalOperation):
-    def __init__(self, url, interval, clock=time.time):
+    def __init__(self, url, interval, headers=None, clock=time.time):
         super().__init__(interval, clock)
         self.url = url
+        self._headers = headers or {}
         self.etag = ''
 
     def run(self):
         # noinspection PyBroadException
         try:
+            self._headers.update({'If-None-Match': self.etag})
+            self.log.debug("Headers: %r", self._headers)
             self.log.debug("ETag: %r", self.etag)
-            headers = {'If-None-Match': self.etag}
-            res = requests.get(url=self.url, headers=headers, timeout=3.0)
+            res = requests.get(url=self.url, headers=self._headers, timeout=3.0)
+            self._headers.pop('If-None-Match', None)
 
             if res.status_code == 304:
                 self.log.debug("use cached value")
@@ -72,11 +75,12 @@ class UrlFetcher(PeriodicalOperation):
 
 
 class Reporter(PeriodicalOperation):
-    def __init__(self, client, url, interval, clock=time.time):
+    def __init__(self, client, url, interval, headers=None, clock=time.time):
         super().__init__(interval, clock)
         self.cache = None
         self.client = client
         self.url = url
+        self._headers = headers or {}
 
     @staticmethod
     def fmt_time(t):
@@ -102,7 +106,7 @@ class Reporter(PeriodicalOperation):
                 "bucket": bucket,
             }
             self.log.info('%r', report)
-            res = requests.post(self.url, json=report)
+            res = requests.post(self.url, headers=self._headers, json=report)
             self.log.info('%r', res.status_code)
         except:
             pass
