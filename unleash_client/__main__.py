@@ -2,6 +2,7 @@ import argparse
 import random
 import logging
 import time
+import json
 
 from unleash_client import client
 
@@ -19,6 +20,13 @@ argparser.add_argument(
     '-u', '--url',
     default='http://localhost:4242',
     help='URL base for the Unleash feature toggle service',
+)
+
+argparser.add_argument(
+    '-H', '--headers',
+    default='{}',
+    type=json.loads,
+    help='HTTP Header json encoded when making requests to the Unleash feature toggle service',
 )
 
 argparser.add_argument(
@@ -70,6 +78,7 @@ def main(args):
 
     un = client(
         url=ns.url,
+        headers=ns.headers,
         refresh_interval=5,
         metrics_interval=2,
     )
