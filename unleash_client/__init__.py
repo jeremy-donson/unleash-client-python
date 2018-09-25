@@ -1,5 +1,7 @@
 import logging
 
+from urllib.parse import urljoin
+
 from .clients import Client, DummyClient
 from .io import UrlFetcher, FileFetcher
 
@@ -23,7 +25,7 @@ def client(
     elif url.startswith('file:///'):
         fetch = FileFetcher(url[8:])
     elif url.startswith('http://') or url.startswith('https://'):
-        fetch = UrlFetcher(url + '/api/client/features', refresh_interval, headers)
+        fetch = UrlFetcher(urljoin(url, '/api/client/features'), refresh_interval, headers)
     else:
         log.error("Unexpected unleash client url scheme: %r", url)
         raise ValueError(url)

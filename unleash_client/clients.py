@@ -1,6 +1,7 @@
 import time
 
 import logging
+from urllib.parse import urljoin
 
 from .strategy import DEFAULT_STRATEGIES
 from .io import UrlFetcher, Reporter
@@ -35,7 +36,7 @@ class Client:
         self.instance_id = instance_id or name_instance()
 
         self.strategies = strategies
-        features_url = url + '/api/client/features'
+        features_url = urljoin(url, '/api/client/features')
         self.fetch = fetch or UrlFetcher(features_url, refresh_interval, self._headers)
         self.defs = {}
         self.features = {}
@@ -43,7 +44,7 @@ class Client:
         if not disable_metrics:
             self.reporter = Reporter(
                 self,
-                url + '/api/client/metrics',
+                urljoin(url, '/api/client/metrics'),
                 metrics_interval,
                 self._headers,
                 clock=clock,
