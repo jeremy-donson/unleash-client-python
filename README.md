@@ -9,6 +9,9 @@ consider it alpha for now.
 
 The main project is at https://github.com/Unleash/unleash.
 
+This client is a clone of https://github.com/aes/unleash-client-python,
+with some minor enhancements.
+
 
 Overview
 --------
@@ -26,9 +29,9 @@ To install use pip:
 
 To clone the repo:
 
-    $ git clone https://github.com/aes/unleash-client-python.git
+    $ git clone https://github.com/rarruda/unleash-client-python.git
     $ python setup.py install
-    
+
 CLI tool
 --------
 To ask a specific feature test:
@@ -52,3 +55,4 @@ TBD
 See License.txt for Apache License v2.0
 
 Copyright (c) 2017 Anders Eurenius
+Copyright (c) 2018 Renato Arruda
