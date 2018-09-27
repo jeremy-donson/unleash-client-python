@@ -60,7 +60,10 @@ class Client:
             self.features = {t.feature['name']: t for t in ts}
         return self.features.get(name, lambda *al, **kw: False)
 
-    def enabled(self, name, context):
+    def enabled(self, name, context = {}):
+        if not isinstance(context, dict):
+            log.error("Ignoring context parameter, as it is not a dictionary: %r", context)
+            context = {}
         try:
             return self.get(name)(context)
         finally:
