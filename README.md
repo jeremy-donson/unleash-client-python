@@ -1,6 +1,8 @@
 unleash-client-python
 =====================
 
+[![Build Status](https://travis-ci.com/rarruda/unleash-client-python.svg?branch=master)](https://travis-ci.com/rarruda/unleash-client-python)
+
 Unleash is a feature toggle system with a good design and simple API.
 
 This is a Python client library for that system, for use in applications and

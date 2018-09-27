@@ -26,7 +26,7 @@ class Feature:
 
     def __call__(self, context):
         result = self.enabled and (
-            not self.gates or any(g(**context) for g in self.gates))
+            (len(self.gates) > 0) and any(g(**context) for g in self.gates))
         self.choices[result] += 1
         return result
 
